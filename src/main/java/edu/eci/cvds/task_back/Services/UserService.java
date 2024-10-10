@@ -94,20 +94,25 @@ public class UserService {
      * genera un número aleatorio de tareas (entre 100 y 1000)
      * y asigna valores aleatorios para sus propiedades.
      */
-    public void RandomTask() {
+    public void RandomTask(String idUser) throws Exception {
         Random random = new Random();
         int randomTasks = random.nextInt(100, 1001);
         String[] difficulties = {"High", "Middle", "Low"};
 
         for (int i = 0; i < randomTasks; i++) {
-            String name = "Task" + (i + 1);
-            String description = "Description" + (i + 1);
-            String dueDate = LocalDate.now().plusDays(random.nextInt(30) + 1).toString();
-            String difficulty = difficulties[random.nextInt(difficulties.length)];
-            Integer priority = random.nextInt(1, 6);
-            double estimatedTime = random.nextDouble() * 10;
-            Task task = new Task(name, description, dueDate, difficulty, priority, estimatedTime);
-            saveTask(task);
+            try{
+                String name = "Task" + (i + 1);
+                String description = "Description" + (i + 1);
+                String dueDate = LocalDate.now().plusDays(random.nextInt(30) + 1).toString();
+                String difficulty = difficulties[random.nextInt(difficulties.length)];
+                Integer priority = random.nextInt(1, 6);
+                double estimatedTime = random.nextDouble() * 10;
+                Task task = new Task(name, description, dueDate, difficulty, priority, estimatedTime);
+                saveTaskByUser(idUser, task);
+            } catch (Exception e) {
+                throw new Exception(e.getMessage());
+            }
+
         }
     }
 
@@ -124,9 +129,6 @@ public class UserService {
 
     }
 
-    public User findByUsername(String username){
-        return userRepository.findByUsername(username);
-    }
 
     public boolean deleteUser(String userId) throws Exception {
 
@@ -169,5 +171,18 @@ public class UserService {
             throw new Exception(e.getMessage());
         }
 
+    }
+    public String getUsername(String id) throws Exception {
+        try{
+            String user = userRepository.getUserName(id);
+            if (user != null) {
+                return user;
+            }
+            else{
+                throw new Exception("User doesn't exist");
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 }

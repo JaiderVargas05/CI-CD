@@ -25,4 +25,11 @@ public interface UserMySqlRepository extends JpaRepository<User, String>{
     }
     User findByUsername(String userName);
     User findByEmail(String email);
+    default String getUserName(String idUser){
+        User user = getUser(idUser);
+        if(user != null){
+            return user.getUsername();
+        }
+        return null;
+    }
 }

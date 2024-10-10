@@ -19,7 +19,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * TaskMongoRepository o TaskTextRepository.
  */
 @Configuration
-
 @EnableJpaRepositories(basePackages = "edu.eci.cvds.task_back.Repositories.mysql")
 @EnableMongoRepositories(basePackages = "edu.eci.cvds.task_back.Repositories.mongo")
 public class TaskConfig {

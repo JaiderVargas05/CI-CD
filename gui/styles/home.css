@@ -93,6 +93,7 @@ main{
     padding-bottom: 10px;
     justify-items: center;
     padding: 0 4rem 0 4rem;
+    background-color: #2bb5c5;
 }
 .task {
     background-color: #15505d;
