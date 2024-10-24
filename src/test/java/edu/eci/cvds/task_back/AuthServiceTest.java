@@ -42,38 +42,11 @@ public class AuthServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-//    @Test
-//    public void testRegister_ValidData_ShouldReturnAuthResponse() throws Exception {
-//        // Crear un objeto RegisterRequest con datos válidos
-//        RegisterRequest request = new RegisterRequest();
-//        request.setUsername("user1");
-//        request.setEmail("user1@example.com");
-//        request.setPasswd("Password1!"); // Asegúrate de que la contraseña cumple con los requisitos
-//
-//        // Configurar el comportamiento del mock para el repositorio
-//        when(userRepository.findByUsername("user1")).thenReturn(null);
-//        when(userRepository.findByEmail("user1@example.com")).thenReturn(null);
-//        when(jwtService.getToken(any(User.class))).thenReturn("mockToken");
-//
-//        // Simular la creación del usuario en el repositorio
-//        doNothing().when(userRepository).createUser(any(User.class));
-//
-//        // Ejecutar el método de registro
-//        AuthResponse response = authService.register(request);
-//
-//        // Verificar que se haya generado un token y el ID del usuario
-//        assertNotNull(response);
-//        assertEquals("mockToken", response.getToken());
-//
-//        // Simulación para obtener el ID del usuario
-//        when(userRepository.findByUsername("user1")).thenReturn(new User("user1", "user1@example.com", "Password1!", Role.USER));
-//        assertNotNull(response.getUserId());
-//    }
     /**
      * Prueba el registro de un nuevo usuario con un correo electrónico ya existente.
      */
     @Test
-    public void testCreateUser_EmailAlreadyUsed_ShouldThrowException() {
+    public void testEmailAlreadyUsed() {
         // Crear un objeto User con un correo electrónico ya existente
         User user = new User();
         user.setEmail("existing@example.com");
@@ -94,7 +67,7 @@ public class AuthServiceTest {
      * Prueba el registro de un nuevo usuario con datos válidos.
      */
     @Test
-    public void testCreateUser_ValidData_ShouldCreateUser() throws Exception {
+    public void testValidData() throws Exception {
         // Crear un objeto User con datos válidos
         User user = new User();
         user.setEmail("newuser@example.com");
@@ -114,10 +87,8 @@ public class AuthServiceTest {
         assertEquals("encodedPassword", user.getPasswd());
     }
 
-
-
     @Test
-    public void testRegister_Success1() throws Exception {
+    public void testRegisterSuccess() throws Exception {
         // Preparar
         RegisterRequest request = new RegisterRequest();
         request.setUsername("user1");
@@ -151,9 +122,8 @@ public class AuthServiceTest {
         assertEquals("user1-id", response.getUserId());
     }
 
-
     @Test
-    public void testRegister_UsernameAlreadyTaken2() {
+    public void testUsernameAlreadyTaken() {
         // Preparar
         RegisterRequest request = new RegisterRequest();
         request.setUsername("user1"); // Nombre de usuario que ya está tomado
@@ -180,7 +150,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void testRegister_InvalidPassword() {
+    public void testInvalidPassword() {
         // Preparar
         RegisterRequest request = new RegisterRequest();
         request.setUsername("user1");
@@ -201,7 +171,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void testRegister_MissingFieldsPREGUNTARRRRR() {
+    public void testMissingFields() {
         // Preparar
         RegisterRequest request1 = new RegisterRequest();
         request1.setUsername(""); // Campo de nombre de usuario vacío

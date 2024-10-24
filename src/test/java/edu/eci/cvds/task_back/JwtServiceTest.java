@@ -41,7 +41,9 @@ class JwtServiceTest {
      */
     @Test
     void testGetToken() {
+        // Generar un token para el usuario configurado
         String token = jwtService.getToken(userDetails);
+
         // Verifica que el token no sea nulo
         assertNotNull(token);
     }
@@ -51,8 +53,12 @@ class JwtServiceTest {
      */
     @Test
     void testGetUsernameFromToken() {
+        // Generar un token para el usuario configurado
         String token = jwtService.getToken(userDetails);
+
+        // Extraer el nombre de usuario del token
         String username = jwtService.getUsernameFromToken(token);
+
         // Verifica que el nombre de usuario extraído coincida con el esperado
         assertEquals("testUser", username);
     }
@@ -62,54 +68,28 @@ class JwtServiceTest {
      */
     @Test
     void testIsTokenValid() {
+        // Generar un token para el usuario configurado
         String token = jwtService.getToken(userDetails);
+
+        // Validar el token generado
         boolean isValid = jwtService.isTokenValid(token, userDetails);
+
         // Verifica que el token sea válido
         assertTrue(isValid);
     }
-
-//    /**
-//     * Prueba para verificar que el método getAllClaims() obtiene todos los claims del token.
-//     */
-//    @Test
-//    void testGetAllClaims() {
-//        String token = jwtService.getToken(userDetails);
-//        Claims claims = jwtService.getAllClaims(token);
-//        // Verifica que los claims no sean nulos y que el sujeto sea correcto
-//        assertNotNull(claims);
-//        assertEquals("testUser", claims.getSubject());
-//    }
 
     /**
      * Prueba para verificar que el método getClaim() extrae un claim específico del token.
      */
     @Test
     void testGetClaim() {
+        // Generar un token para el usuario configurado
         String token = jwtService.getToken(userDetails);
+
+        // Extraer el claim (en este caso, el nombre de usuario) del token
         String username = jwtService.getClaim(token, Claims::getSubject);
+
         // Verifica que el nombre de usuario extraído coincida con el esperado
         assertEquals("testUser", username);
     }
-
-    /**
-     * Prueba para verificar que el método isTokenExpired() determina correctamente si el token ha expirado.
-     */
-//    @Test
-//    void testIsTokenExpired() {
-//        String token = jwtService.getToken(userDetails);
-//        boolean isExpired = jwtService.isTokenExpired(token);
-//        // Verifica que el token no esté expirado
-//        assertFalse(isExpired);
-//    }
-
-    /**
-     * Prueba para verificar que el método getExpiration() obtiene la fecha de expiración del token.
-     */
-//    @Test
-//    void testGetExpiration() {
-//        String token = jwtService.getToken(userDetails);
-//        Date expirationDate = jwtService.getExpiration(token);
-//        // Verifica que la fecha de expiración no sea nula
-//        assertNotNull(expirationDate);
-//    }
 }
