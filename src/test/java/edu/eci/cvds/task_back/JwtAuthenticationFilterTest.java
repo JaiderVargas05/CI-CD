@@ -33,8 +33,9 @@ public class JwtAuthenticationFilterTest {
 
     @BeforeEach
     public void setUp() {
+        // Inicializa los mocks y limpia el contexto de seguridad antes de cada prueba
         MockitoAnnotations.openMocks(this);
-        SecurityContextHolder.clearContext(); // Limpiar el contexto de seguridad antes de cada prueba
+        SecurityContextHolder.clearContext();
     }
 
     @Test
@@ -43,7 +44,7 @@ public class JwtAuthenticationFilterTest {
         String token = "valid-token";
         String username = "user1";
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader("Authorization", "Bearer " + token);
+        request.addHeader("Authorization", "Bearer " + token); // Añadir token válido al encabezado
         MockHttpServletResponse response = new MockHttpServletResponse();
         FilterChain filterChain = mock(FilterChain.class);
 
@@ -62,7 +63,7 @@ public class JwtAuthenticationFilterTest {
         verify(jwtService, times(1)).isTokenValid(token, userDetails);
         verify(filterChain, times(1)).doFilter(request, response);
 
-        assertNotNull(SecurityContextHolder.getContext().getAuthentication());
+        assertNotNull(SecurityContextHolder.getContext().getAuthentication()); // Verificar autenticación
         assertEquals(username, ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
     }
 
@@ -72,7 +73,7 @@ public class JwtAuthenticationFilterTest {
         String token = "invalid-token";
         String username = "user1";
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader("Authorization", "Bearer " + token);
+        request.addHeader("Authorization", "Bearer " + token); // Añadir token inválido al encabezado
         MockHttpServletResponse response = new MockHttpServletResponse();
         FilterChain filterChain = mock(FilterChain.class);
 
@@ -90,13 +91,13 @@ public class JwtAuthenticationFilterTest {
         verify(jwtService, times(1)).isTokenValid(token, userDetails);
         verify(filterChain, times(1)).doFilter(request, response);
 
-        assertNull(SecurityContextHolder.getContext().getAuthentication());
+        assertNull(SecurityContextHolder.getContext().getAuthentication()); // Verificar que no haya autenticación
     }
 
     @Test
     public void testDoFilterInternal_NoToken_ShouldNotAuthenticateUser() throws ServletException, IOException {
         // Preparar
-        MockHttpServletRequest request = new MockHttpServletRequest();
+        MockHttpServletRequest request = new MockHttpServletRequest(); // No añadir token
         MockHttpServletResponse response = new MockHttpServletResponse();
         FilterChain filterChain = mock(FilterChain.class);
 
@@ -109,6 +110,6 @@ public class JwtAuthenticationFilterTest {
         verify(jwtService, never()).isTokenValid(anyString(), any(UserDetails.class));
         verify(filterChain, times(1)).doFilter(request, response);
 
-        assertNull(SecurityContextHolder.getContext().getAuthentication());
+        assertNull(SecurityContextHolder.getContext().getAuthentication()); // Verificar que no haya autenticación
     }
 }

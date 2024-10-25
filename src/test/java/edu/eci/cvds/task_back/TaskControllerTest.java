@@ -97,11 +97,4 @@ public class TaskControllerTest {
         verify(taskService, times(1)).getTasks();
     }
 
-//    @Test
-//    public void testGenerateTasks() throws Exception {
-//        mockMvc.perform(get("/taskManager/generateTasksss"))
-//                .andExpect(status().isOk());
-//        verify(taskService).RandomTask();
-//    }
-
 }
